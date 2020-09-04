@@ -1,0 +1,54 @@
+api: v1
+
+meta:
+  icon: html
+  name: HTML
+  baseline: Static HTML website
+  description: >
+    Static HTML website
+  categories:
+    - static
+
+form:
+  - title: Code repository
+    questions:
+      - variable: html_application
+        label: Code repository
+        hint: >
+          The Git repository containing the source code of your application.
+        required: true
+        type: code_repository
+
+deployment:
+  - resource: image
+    name: html_application
+    code_repository: "{{ variable.html_application }}"
+    dockerfile: Dockerfile
+  - resource: container
+    name: html
+    image: "{{ image.html_application }}"
+    endpoints:
+      - name: html_internal
+        type: container_port
+        port: 80
+      - name: html_external
+        type: domain
+        port: 80
+    memory: 256
+    cpus: 256
+
+interface:
+  endpoints:
+    show:
+      - title: Internal endpoint
+        endpoint: "{{ endpoint.html_internal }}"
+      - title: External endpoint
+        endpoint: "{{ endpoint.html_external }}"
+    create:
+      - title: External endpoint
+        container: "{{ container.html }}"
+        port: 80
+        type: domain
+  logs:
+    - title: NGINX error logs
+      container: "{{ container.html }}"
