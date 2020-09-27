@@ -27,28 +27,15 @@ deployment:
   - resource: container
     name: html
     image: "{{ image.html_application }}"
-    endpoints:
-      - name: html_internal
-        type: container_port
-        port: 80
-      - name: html_external
-        type: domain
-        port: 80
     memory: 256
-    cpus: 256
+    cpus: 250
+  - resource: service
+    name: html_application
+    title: HTML application
+    container: "{{ container.html }}"
+    port: 80
 
 interface:
-  endpoints:
-    show:
-      - title: Internal endpoint
-        endpoint: "{{ endpoint.html_internal }}"
-      - title: External endpoint
-        endpoint: "{{ endpoint.html_external }}"
-    create:
-      - title: External endpoint
-        container: "{{ container.html }}"
-        port: 80
-        type: domain
   logs:
     - title: NGINX error logs
       container: "{{ container.html }}"
