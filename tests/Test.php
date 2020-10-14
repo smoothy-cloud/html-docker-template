@@ -17,6 +17,9 @@ class Test extends TemplateTest
     public function the_image_files_can_be_parsed()
     {
         $imageFiles = $this->parseImageFiles([]);
+
+        unset($imageFiles['template.yml']);
+
         $this->assertParsedImageFilesMatchFolderContents($imageFiles, __DIR__ . "/concerns/result");
     }
 
