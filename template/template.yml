@@ -26,16 +26,16 @@ deployment:
     dockerfile: Dockerfile
   - resource: container
     name: html
-    image: "{{ image.html_application }}"
+    image: "{* image.html_application *}"
     memory: 256
     cpus: 250
   - resource: service
     name: html_application
     title: HTML application
-    container: "{{ container.html }}"
+    container: "{* container.html *}"
     port: 80
 
 interface:
   logs:
     - title: NGINX error logs
-      container: "{{ container.html }}"
+      container: "{* container.html *}"
