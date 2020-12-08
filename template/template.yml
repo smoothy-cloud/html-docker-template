@@ -29,11 +29,11 @@ deployment:
     image: "{* image.html_application *}"
     memory: 256
     cpus: 250
-  - resource: service
+  - resource: entrypoint
     name: html_application
     title: HTML application
     container: "{* container.html *}"
-    port: 80
+    port: 8080
 
 interface:
   logs:
